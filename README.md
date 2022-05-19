@@ -15,7 +15,7 @@ pip install aiohttp-serve
 
 ## Usage
 
-<h5><strong><code>web.py</code></strong></h5>
+<h5><code>web.py</code></h5>
 
 ```python
 from aiohttp import web
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     )
 ```
 
-of use `log_config` arg
+of use `log_config` arg (dict, .json or .yaml or .conf file)
 
 ```python
 from aiohttp_serve import serve
