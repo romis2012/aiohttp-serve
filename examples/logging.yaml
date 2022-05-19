@@ -1,0 +1,39 @@
+version: 1
+disable_existing_loggers: false
+formatters:
+  default:
+    "()": logging.Formatter
+    fmt: '%(asctime)s [%(process)d] [%(name)s] %(levelname)s : %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S (%Z)'
+  access:
+    "()": logging.Formatter
+    fmt: '%(message)s'
+handlers:
+  default:
+    formatter: default
+    class: logging.handlers.RotatingFileHandler
+    filename: './logs/main.log'
+    maxBytes: 5000000
+    backupCount: 10
+  access:
+    formatter: access
+    class: logging.handlers.RotatingFileHandler
+    filename: './logs/access.log'
+    maxBytes: 5000000
+    backupCount: 10
+  console:
+    formatter: default
+    class: logging.StreamHandler
+    stream: ext://sys.stdout
+loggers:
+  '': # root
+    handlers: ['default']
+    level: INFO
+  'aiohttp.serve':
+    level: INFO
+    handlers: ['default', 'console']
+    propagate: false
+  'aiohttp.access':
+    handlers: ['access', 'console']
+    level: INFO
+    propagate: false
