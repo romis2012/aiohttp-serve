@@ -4,12 +4,19 @@ import platform
 import random
 import time
 from typing import List
+import signal
+
+from aiohttp.web_runner import GracefulExit
 
 from ._config import Config, BoundSocket
 from ._logging import logger, configure_logging
 from ._worker import Worker
 
 multiprocessing.allow_connection_pickling()
+
+
+def shutdown(sig, frame):  # noqa
+    raise GracefulExit()
 
 
 def run_worker(
@@ -38,6 +45,8 @@ class Supervisor:
         self.context = multiprocessing.get_context(start_method)
 
     def run(self):
+        signal.signal(signal.SIGTERM, shutdown)
+
         logger.info(f'Starting master process [{os.getpid()}]')
         processes = []
         for i in range(self.config.workers):
