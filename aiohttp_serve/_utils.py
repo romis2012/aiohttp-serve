@@ -21,7 +21,7 @@ def load_application(
 
     try:
         module_name, app_name = path.split(":", 1)
-    except ValueError:
+    except ValueError:  # pragma: no cover
         module_name, app_name = path, "app"
     except AttributeError:
         raise NoAppError()
@@ -34,7 +34,7 @@ def load_application(
         import_name = module_path.name
     try:
         module = import_module(import_name)
-    except ModuleNotFoundError as error:
+    except ModuleNotFoundError as error:  # pragma: no cover
         if error.name == import_name:
             raise NoAppError()
         else:
@@ -42,5 +42,5 @@ def load_application(
 
     try:
         return eval(app_name, vars(module))
-    except NameError:
+    except NameError:  # pragma: no cover
         raise NoAppError()

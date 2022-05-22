@@ -20,11 +20,11 @@ def bind_socket(info: BindInfo):
         path = os.fspath(info.path)
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         try:
-            if stat.S_ISSOCK(os.stat(path).st_mode):
+            if stat.S_ISSOCK(os.stat(path).st_mode):  # pragma: no cover
                 os.remove(path)
         except FileNotFoundError:
             pass
-        except OSError as err:
+        except OSError as err:  # pragma: no cover
             # Directory may have permissions only to create socket.
             logger.error('Unable to check or remove stale UNIX socket %r: %r', path, err)
             raise
@@ -33,7 +33,7 @@ def bind_socket(info: BindInfo):
             sock.bind(path)
             perms = 0o666
             os.chmod(path, perms)
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             sock.close()
             logger.error(e)
             raise
@@ -48,7 +48,7 @@ def bind_socket(info: BindInfo):
         else:
             family = socket.AF_INET
 
-        sock = socket.socket(family=family)
+        sock = socket.socket(family, socket.SOCK_STREAM)
         # try:
         #     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         # except AttributeError:
@@ -56,7 +56,7 @@ def bind_socket(info: BindInfo):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
             sock.bind((host, port))
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             sock.close()
             logger.error(e)
             raise
@@ -64,12 +64,12 @@ def bind_socket(info: BindInfo):
     sock.setblocking(False)
     try:
         sock.set_inheritable(True)
-    except AttributeError:
+    except AttributeError:  # pragma: no cover
         pass
     return sock
 
 
-def share_socket(sock: socket.socket) -> socket.socket:
+def share_socket(sock: socket.socket) -> socket.socket:  # pragma: no cover
     # Windows requires the socket be explicitly shared across
     # multiple workers (processes).
     from socket import fromshare  # type: ignore

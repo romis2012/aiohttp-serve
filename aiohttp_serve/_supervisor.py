@@ -58,7 +58,7 @@ class Supervisor:
             process.start()
             processes.append(process)
 
-            if platform.system() == 'Windows':
+            if platform.system() == 'Windows':  # pragma: no cover
                 time.sleep(0.1 * random.random())
 
         try:

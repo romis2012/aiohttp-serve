@@ -71,7 +71,7 @@ class Worker:
                     )
 
                 sock = s.socket
-                if config.workers > 1 and platform.system() == 'Windows':
+                if config.workers > 1 and platform.system() == 'Windows':  # pragma: no cover
                     sock = share_socket(s.socket)
 
                 sites.append(
@@ -90,7 +90,7 @@ class Worker:
             # sleep forever by 1 hour intervals,
             # on Windows before Python 3.8 wake up every 1 second to handle
             # Ctrl+C smoothly
-            if platform.system() == 'Windows' and sys.version_info < (3, 8):
+            if platform.system() == 'Windows' and sys.version_info < (3, 8):  # pragma: no cover
                 delay = 1
             else:
                 delay = 3600
@@ -108,10 +108,10 @@ class Worker:
                 import uvloop  # noqa
 
                 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-            except ImportError:
+            except ImportError:  # pragma: no cover
                 pass
 
-        if config.workers > 1 and platform.system() == 'Windows':
+        if config.workers > 1 and platform.system() == 'Windows':  # pragma: no cover
             warn_msg = (
                 'Using workers > 1 on Windows will force the use '
                 'of SelectorEventLoop due to some issues '
@@ -132,7 +132,7 @@ class Worker:
         loop.run_until_complete(loop.shutdown_asyncgens())
         try:
             loop.run_until_complete(loop.shutdown_default_executor())
-        except AttributeError:
+        except AttributeError:  # pragma: no cover
             pass  # shutdown_default_executor is new to Python 3.9
         loop.close()
 

@@ -54,7 +54,7 @@ class BoundSocket(NamedTuple):
         if self.info.is_unix_socket:
             try:
                 os.remove(self.info.path)
-            except FileNotFoundError:
+            except FileNotFoundError:  # pragma: no cover
                 pass
 
 
@@ -109,7 +109,7 @@ class Config:
 
     @property
     def is_ssl(self) -> bool:
-        return bool(self.ssl_certfile and self.ssl_keyfile)
+        return bool(self.ssl_certfile)
 
     def create_ssl_context(self) -> Optional[ssl.SSLContext]:
         if self.is_ssl:

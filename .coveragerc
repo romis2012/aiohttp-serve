@@ -1,0 +1,12 @@
+[run]
+omit =
+#    */*.py
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    pragma: no cover
+    pragma: nocover
+    def __repr__
+    if self.debug:
+    raise NotImplementedError
+    raise ValueError
