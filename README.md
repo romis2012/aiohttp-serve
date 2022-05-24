@@ -1,5 +1,8 @@
 ## aiohttp-serve
 
+[![CI](https://github.com/romis2012/aiohttp-serve/actions/workflows/ci.yml/badge.svg)](https://github.com/romis2012/aiohttp-serve/actions/workflows/ci.yml)
+[![PyPI version](https://badge.fury.io/py/aiohttp-serve.svg)](https://pypi.python.org/pypi/aiohttp-serve)
+
 `aiohttp-serve` package allows you to run `aiohttp.web.Application` on multiple workers/processes 
 (if for some reason you don't want to use external servers such as gunicorn etc.)
 
