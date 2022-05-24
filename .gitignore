@@ -41,3 +41,4 @@ virtualenv.py
 .idea/
 usage*.py
 logs
+coverage.xml

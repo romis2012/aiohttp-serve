@@ -31,6 +31,9 @@ jobs:
         continue-on-error: true
       - name: Run tests
         run: |
-          python -m pytest tests
-#          python -m coverage report
-#          python -m coverage xml
+          python -m pytest tests --cov=./aiohttp_serve --cov-report xml
+    - name: Upload coverage
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: coverage.xml
