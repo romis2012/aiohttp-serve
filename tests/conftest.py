@@ -44,14 +44,15 @@ def ssl_ca_cert(ssl_ca: trustme.CA):
 
 @pytest.fixture
 def server_ssl_context(ssl_cert: trustme.LeafCert) -> ssl.SSLContext:
-    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     ssl_cert.configure_cert(ssl_ctx)
     return ssl_ctx
 
 
 @pytest.fixture
 def client_ssl_context(ssl_ca: trustme.CA) -> ssl.SSLContext:
-    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    # ssl_ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     ssl_ctx.verify_mode = ssl.CERT_REQUIRED
     ssl_ctx.check_hostname = True
     ssl_ca.configure_trust(ssl_ctx)
